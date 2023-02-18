@@ -14,5 +14,13 @@ public class GameStoreTest {
         assertTrue(store.containsGame(game));
     }
 
+    @Test
+    public void shouldReturnFalseByNotAddGame() {
+
+        GameStore store = new GameStore();
+        Game game1 = new Game("Нетология", "Симуляторы", store);
+
+        assertFalse(store.containsGame(game1));
+    }
     // другие ваши тесты
 }
