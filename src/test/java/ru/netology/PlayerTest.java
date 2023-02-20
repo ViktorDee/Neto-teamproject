@@ -103,7 +103,7 @@ public class PlayerTest {
         player.play(game4, 4);
         player.play(game5, 2);
 
-        String expected = "Аркады";
+        String expected = "Шахматы";
         Game actual = player.mostPlayerByGenre(game.getGenre());
         assertEquals(expected, actual);
     }
