@@ -59,5 +59,4 @@ public class GameStoreTest {
         assertThrows(RuntimeException.class, () -> store.publishGame(game2.getTitle(), game2.getGenre()));
 
     }
-
 }
