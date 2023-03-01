@@ -2,7 +2,9 @@ package ru.netology;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 public class PlayerTest {
 
     @Test
@@ -102,9 +104,9 @@ public class PlayerTest {
         player.play(game4, 4);
         player.play(game5, 2);
 
-        String expected = "Шахматы";
-        Game actual = player.mostPlayerByGenre(game.getGenre());
-        assertEquals(expected, actual);
+        Game expected = game2;
+        Game actual = player.mostPlayerByGenre("Казаки");
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
