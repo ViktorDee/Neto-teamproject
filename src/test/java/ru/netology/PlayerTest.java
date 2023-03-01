@@ -2,7 +2,6 @@ package ru.netology;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
@@ -44,11 +43,9 @@ public class PlayerTest {
     @Test
     public void shouldNotSumGenreIfNoGames() {
         GameStore store = new GameStore();
-        Game game = store.publishGame("", "Аркады");
+        Game game = store.publishGame("", "");
 
         Player player = new Player("Petya");
-        player.installGame(game);
-        player.play(game, 3);
 
         int expected = 0;
         int actual = player.sumGenre(game.getGenre());
@@ -58,13 +55,15 @@ public class PlayerTest {
     @Test
     public void shouldThrowRuntimeExceptionIfNoGamesInstalled() {
         GameStore store = new GameStore();
-        Game game = store.publishGame("", "Аркады");
+        Game game = store.publishGame("Казаки", "Аркады");
+        Game game1 = store.publishGame("NFS", "Гонки");
 
         Player player = new Player("Petya");
+        player.installGame(game);
         player.play(game, 3);
 
         assertThrows(RuntimeException.class, () -> {
-            player.installGame(null);
+            player.play(game1,4);
         });
     }
 
@@ -106,23 +105,20 @@ public class PlayerTest {
 
         Game expected = game2;
         Game actual = player.mostPlayerByGenre("Казаки");
-        Assertions.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void shouldNotFindMostPlayedByGenre() {
         GameStore store = new GameStore();
-        Game game = store.publishGame("", "");
+        Game game = store.publishGame("Казаки", "Стратегии");
 
 
         Player player = new Player("Petya");
-        player.installGame(game);
-
-        player.play(game, 3);
 
 
-        String expected = null;
-        Game actual = player.mostPlayerByGenre(game.getGenre());
+        Game expected = null;
+        Game actual = player.mostPlayerByGenre("Казаки");
         assertEquals(expected, actual);
     }
 }
