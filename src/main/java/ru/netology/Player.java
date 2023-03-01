@@ -14,12 +14,10 @@ public class Player {
     private Map<Game, Integer> playedTime = new HashMap<>();
 
     public Player(String name) {
-
         this.name = name;
     }
 
     public String getName() {
-
         return name;
     }
 
@@ -28,9 +26,7 @@ public class Player {
      * если игра уже была, никаких изменений происходить не должно
      */
     public void installGame(Game game) {
-        if (!playedTime.containsKey(game)) {
-            playedTime.put(game, 0);
-        }
+        playedTime.put(game, 0);
     }
 
     /**
@@ -43,9 +39,9 @@ public class Player {
     public int play(Game game, int hours) {
         game.getStore().addPlayTime(name, hours);
         if (playedTime.containsKey(game)) {
-            playedTime.put(game, playedTime.get(game) + hours);
+            playedTime.put(game, playedTime.get(game));
         } else {
-            throw new RuntimeException("Игра не установлена");
+            playedTime.put(game, hours);
         }
         return playedTime.get(game);
     }
@@ -59,6 +55,8 @@ public class Player {
         for (Game game : playedTime.keySet()) {
             if (game.getGenre().equals(genre)) {
                 sum += playedTime.get(game);
+            } else {
+                sum = 0;
             }
         }
         return sum;
@@ -69,17 +67,20 @@ public class Player {
      * Если в игры этого жанра не играли, возвращается null
      */
     public Game mostPlayerByGenre(String genre) {
+
         int mostTime = 0;
-        Game mostPlayedGame = null;
+        Game bestPlayed = null;
         for (Game game : playedTime.keySet()) {
             if (game.getGenre().equals(genre)) {
+
+
                 int playerTime = playedTime.get(game);
                 if (playerTime > mostTime) {
                     mostTime = playerTime;
-                    mostPlayedGame = game;
+                    bestPlayed = game;
                 }
             }
         }
-        return mostPlayedGame;
+        return bestPlayed;
     }
 }

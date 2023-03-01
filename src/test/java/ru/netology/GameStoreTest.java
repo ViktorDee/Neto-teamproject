@@ -14,6 +14,17 @@ public class GameStoreTest {
 
         assertTrue(store.containsGame(game));
     }
+    @Test
+    void shouldAddPlayerTime() {
+        GameStore store = new GameStore();
+        Player player1 = new Player("Petya");
+        store.addPlayTime(player1.getName(), 3);
+
+        String[] actual = store.getMostPlayer();
+        String[] expected = {"Petya"};
+
+        assertArrayEquals(expected, actual);
+    }
 
     @Test
     public void shouldSumGameTime() {
@@ -58,5 +69,41 @@ public class GameStoreTest {
 
         assertThrows(RuntimeException.class, () -> store.publishGame(game2.getTitle(), game2.getGenre()));
 
+    }
+    @Test
+    public void shouldEqualPlayedTime() {
+        GameStore store = new GameStore();
+        Player player1 = new Player("Petya");
+        Player player2 = new Player("Kirill");
+        store.addPlayTime(player1.getName(), 1);
+        store.addPlayTime(player1.getName(), 2);
+        store.addPlayTime(player2.getName(), 2);
+        store.addPlayTime(player2.getName(), 1);
+
+        String[] expected = {"Petya", "Kirill"};
+        String[] actual = store.getMostPlayer();
+
+        assertArrayEquals(expected, actual);
+    }
+    @Test
+    void shouldGameTimeIsOneHour() {
+        GameStore store = new GameStore();
+        Player player1 = new Player("Petya");
+        Player player2 = new Player("Kirill");
+        store.addPlayTime(player2.getName(), 1);
+
+        String[] actual = store.getMostPlayer();
+        String[] expected = {"Kirill"};
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnNullMostPlayer() {
+        GameStore store = new GameStore();
+
+        String[] actual = store.getMostPlayer();
+
+        assertArrayEquals(null, actual);
     }
 }
